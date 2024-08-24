@@ -36,11 +36,3 @@ You may also see any lint errors in the console.
 ## 📚 Documentation
 
 For more detailed documentation and information on customizing the template, please refer to the [GitHub repository](https://github.com/example/vite-react-template).
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit bug reports, feature requests, or pull requests to help improve Vite React Template and make it even more useful for the community.
-
-## 📝 License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to use, modify, and distribute this template for your own projects.
