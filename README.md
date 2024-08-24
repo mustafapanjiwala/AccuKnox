@@ -11,10 +11,10 @@ Vite React Template is a quick-start React template designed to accelerate your 
 
 ## 🛠️ Installation
 
-To create a new project using Vite React Template, simply run the following command:
+To install all the npm dependencies, simply run the following command:
 
 ```console
-npx vite-react-template your-app-name
+npm Install
 ```
 
 Replace `your-app-name` with the desired name for your project.
