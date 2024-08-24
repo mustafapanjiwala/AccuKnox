@@ -98,6 +98,18 @@
             {
               "label": "Label 4",
               "value": 50
+            },
+            {
+              "label": "Label 5",
+              "value": 30
+            },
+            {
+              "label": "Label 6",
+              "value": 40
+            },
+            {
+              "label": "Label 7",
+              "value": 50
             }
           ]
         },

@@ -1,79 +1,40 @@
 import React, { useState, useEffect } from "react";
 import AddWidgetSidebar from "./AddWidgetSidebar";
-import widgetsData from "../widget.json";
-import {
-  BarChart,
-  Pie,
-  PieChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-  Legend,
-  Bar,
-  LineChart,
-  Line,
-  CartesianGrid,
-  Rectangle,
-} from "recharts";
 import { useSelector, useDispatch } from "react-redux";
 import { addWidgetData } from "../redux/categorySlice";
+import widgetsData from "../widget.json";
+import { BarGraph, LineGraph, PieGraph } from "./Charts";
 
 const Dashboard = () => {
   const categories = widgetsData.categories;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [visibleWidgets, setVisibleWidgets] = useState({});
-  const [tempSelectedWidgets, setTempSelectedWidgets] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
   const selectedWidgets = useSelector((state) => state.categories);
+  const [visibleWidgets, setVisibleWidgets] = useState({ ...selectedWidgets });
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
 
-  // Sync tempSelectedWidgets with selectedWidgets on load
   useEffect(() => {
-    setTempSelectedWidgets(selectedWidgets);
-    setVisibleWidgets(selectedWidgets);
+    setVisibleWidgets({ ...selectedWidgets });
   }, [selectedWidgets]);
 
-  const handleWidgetChange = ({ categoryId, widgetId }) => {
-    const categoryWidgets = tempSelectedWidgets[categoryId] || {};
-    const updatedCategoryWidgets = {
-      ...categoryWidgets,
-      [widgetId]: !categoryWidgets[widgetId],
-    };
-
-    setTempSelectedWidgets({
-      ...tempSelectedWidgets,
-      [categoryId]: updatedCategoryWidgets,
-    });
-  };
-
-  const handleSaveSidebar = () => {
-    Object.keys(tempSelectedWidgets).forEach((categoryId) => {
-      dispatch(
-        addWidgetData({
-          selectedWidgets: categoryId,
-          data: tempSelectedWidgets[categoryId],
-        })
-      );
-    });
-    setVisibleWidgets(tempSelectedWidgets);
+  const handleSaveSidebar = (updatedWidgets) => {
+    dispatch(addWidgetData(updatedWidgets));
     setIsSidebarOpen(false);
   };
 
-  const onCancelClick = ({ categoryId, widgetId }) => {
-    const updatedCategoryWidgets = {
-      ...tempSelectedWidgets[categoryId],
-      [widgetId]: false, // Set the widget to false to "remove" it
-    };
-
-    setTempSelectedWidgets((prevWidgets) => ({
-      ...prevWidgets,
-      [categoryId]: updatedCategoryWidgets,
-    }));
-
-    setVisibleWidgets((prevWidgets) => ({
-      ...prevWidgets,
-      [categoryId]: updatedCategoryWidgets,
-    }));
+  const onCancelClick = (categoryId, widgetId) => {
+    setVisibleWidgets((prevWidgets) => {
+      const updatedWidgets = { ...prevWidgets };
+      if (updatedWidgets[categoryId]) {
+        updatedWidgets[categoryId] = {
+          ...updatedWidgets[categoryId],
+          [widgetId]: false,
+        };
+      }
+      dispatch(addWidgetData(updatedWidgets));
+      return updatedWidgets;
+    });
+    setIsSidebarOpen(false);
   };
 
   const filteredWidgets = (widgets) => {
@@ -103,112 +64,74 @@ const Dashboard = () => {
         </div>
       </header>
       <main className="flex w-full flex-col gap-4 px-4 py-4">
-        {categories.map((category) => (
-          <div key={category.id} className="w-full bg-white rounded-lg p-4">
-            <h2 className="text-lg font-bold mb-2">{category.name}</h2>
-            <div className="flex gap-4">
-              {filteredWidgets(category.widgets)
-                .filter(
-                  (widget) => visibleWidgets[category.id]?.[widget.id] ?? false
-                )
-                .map((widget) => (
-                  <div
-                    key={widget.id}
-                    className="w-1/4 p-6 flex flex-col justify-center items-center bg-gray-300 border border-gray-200 rounded-lg shadow"
-                  >
-                    <button
-                      className="h-5 w-5 bg-red-400"
-                      onClick={() => {
-                        onCancelClick({
-                          categoryId: category.id,
-                          widgetId: widget.id,
-                        });
-                      }}
+        {categories.map((category) => {
+          const visibleWidgetCount = category.widgets.filter(
+            (widget) => visibleWidgets[category.id]?.[widget.id] ?? false
+          ).length;
+          return (
+            <div key={category.id} className="w-full bg-white rounded-lg p-4">
+              <h2 className="text-lg font-bold mb-2">{category.name}</h2>
+              <div className="flex gap-4">
+                {filteredWidgets(category.widgets)
+                  .filter(
+                    (widget) =>
+                      visibleWidgets[category.id]?.[widget.id] ?? false
+                  )
+                  .map((widget) => (
+                    <div
+                      key={widget.id}
+                      className="w-1/4 flex flex-col justify-center items-center bg-gray-300 border border-gray-200 rounded-lg shadow"
                     >
-                      X
+                      <div className="flex justify-end items-center w-full">
+                        <button
+                          className=" px-2 py-1 m-2 border-2 rounded-lg font-bold border-black-50"
+                          onClick={() => onCancelClick(category.id, widget.id)}
+                        >
+                          X
+                        </button>
+                      </div>
+                      <h5 className="text-xl font-bold tracking-tight text-gray-900">
+                        {widget.name}
+                      </h5>
+                      {category.type === "pie" ? (
+                        <PieGraph widget={widget} />
+                      ) : category.type === "bar" ? (
+                        <BarGraph widget={widget} />
+                      ) : category.type === "line" ? (
+                        <LineGraph widget={widget} />
+                      ) : null}
+                    </div>
+                  ))}
+                {console.log("hello", filteredWidgets(category.widgets))}
+                {visibleWidgetCount < 3 && (
+                  <div className="w-1/4 flex flex-col justify-center items-center bg-gray-300 border border-gray-200 rounded-lg shadow">
+                    <button
+                      onClick={() => setIsSidebarOpen(true)}
+                      className="bg-blue-500 text-white px-3 py-1 rounded-md ml-2"
+                    >
+                      + Add Widget
                     </button>
-                    <h5 className="mb-2 font-bold tracking-tight text-gray-900">
-                      {widget.name}
-                    </h5>
-                    {category.type === "pie" ? (
-                      <div className="w-full h-full">
-                        <PieChart width={400} height={400}>
-                          <Pie
-                            dataKey="value"
-                            isAnimationActive={true}
-                            data={widget.chartData}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            label
-                          />
-                          <Tooltip />
-                        </PieChart>
-                      </div>
-                    ) : category.type === "bar" ? (
-                      <div className="w-full h-full">
-                        <BarChart
-                          width={350}
-                          height={300}
-                          data={widget.chartData}
-                          margin={{
-                            top: 5,
-                            right: 10,
-                            left: 10,
-                            bottom: 5,
-                          }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar
-                            dataKey="value"
-                            fill="#8884d8"
-                            activeBar={<Rectangle fill="pink" stroke="blue" />}
-                          />
-                        </BarChart>
-                      </div>
-                    ) : category.type === "line" ? (
-                      <div className="w-full h-full">
-                        <LineChart
-                          width={350}
-                          height={300}
-                          data={widget.chartData}
-                          margin={{
-                            top: 5,
-                            right: 10,
-                            left: 10,
-                            bottom: 5,
-                          }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Line
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#8884d8"
-                            activeDot={{ r: 8 }}
-                          />
-                        </LineChart>
-                      </div>
-                    ) : null}
                   </div>
-                ))}
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </main>
       {isSidebarOpen && (
-        <AddWidgetSidebar
-          onClose={() => setIsSidebarOpen(false)}
-          onSave={handleSaveSidebar}
-          handleWidgetChange={handleWidgetChange}
-          selectedWidgets={tempSelectedWidgets}
-        />
+        <>
+          {/* Overlay */}
+          <div className="fixed inset-0 bg-black opacity-30 z-10"></div>
+
+          {/* Sidebar */}
+          <div className="fixed inset-y-0 right-0 z-20 ">
+            <AddWidgetSidebar
+              onClose={() => setIsSidebarOpen(false)}
+              onSave={handleSaveSidebar}
+              selectedWidgets={selectedWidgets}
+            />
+          </div>
+        </>
       )}
     </div>
   );

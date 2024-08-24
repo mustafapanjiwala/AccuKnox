@@ -1,13 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const categorySlice = createSlice({
-    name: 'categories',
-    initialState: {}
-    ,
+    name: "categories",
+    initialState: {
+        1: {
+            1: true,
+            2: true,
+            3: true,
+        },
+        2: {
+            1: true,
+            2: true,
+        },
+        3: {
+            1: true,
+        },
+
+    },
     reducers: {
         addWidgetData: (state, action) => {
-            const { selectedWidgets, data } = action.payload;
-            state[selectedWidgets] = data;
+            return { ...action.payload };
         },
     },
 });
