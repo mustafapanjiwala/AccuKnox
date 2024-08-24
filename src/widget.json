@@ -1,0 +1,225 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "CSPM Executive Dashboard",
+      "type": "pie",
+      "widgets": [
+        {
+          "id": 1,
+          "name": "Cloud Accounts",
+          "chartData": [
+            {
+              "name": "Label 1",
+              "value": 60
+            },
+            {
+              "name": "Label 2",
+              "value": 30
+            },
+            {
+              "name": "Label 3",
+              "value": 40
+            },
+            {
+              "name": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Compliance Status",
+          "chartData": [
+            {
+              "name": "Label 1",
+              "value": 60
+            },
+            {
+              "name": "Label 2",
+              "value": 30
+            },
+            {
+              "name": "Label 3",
+              "value": 40
+            },
+            {
+              "name": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Risk Summary",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "CWPP Dashboard",
+      "type": "bar",
+
+      "widgets": [
+        {
+          "id": 1,
+          "name": "Cloud Accounts",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Compliance Status",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Risk Summary",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Registry Scan",
+      "type": "line",
+
+      "widgets": [
+        {
+          "id": 1,
+          "name": "Cloud Accounts",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Compliance Status",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Risk Summary",
+          "chartData": [
+            {
+              "label": "Label 1",
+              "value": 60
+            },
+            {
+              "label": "Label 2",
+              "value": 30
+            },
+            {
+              "label": "Label 3",
+              "value": 40
+            },
+            {
+              "label": "Label 4",
+              "value": 50
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
