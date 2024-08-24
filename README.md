@@ -21,7 +21,15 @@ Replace `your-app-name` with the desired name for your project.
 
 ## 🚦 Usage
 
-After creating your project using Vite React Template, you can start developing immediately. The template comes pre-configured with Vite, Tailwind CSS, React Router, and other essential tools to accelerate your development process. Refer to the generated `README.md` file within your project for detailed instructions on how to get started.
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ## 📚 Documentation
 
